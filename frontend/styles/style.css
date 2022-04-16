@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+body, h1, h2, h3, p, a, ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul, li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+}
+
+.nav--crud {
+  background-color: #333333;
+  padding: 2rem;
+}
+.nav--crud .logo {
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.crud .header--crud {
+  padding-top: 2rem;
+}
+.crud .header--crud .btn--container {
+  display: flex;
+  justify-content: flex-end;
+}
+.crud .conteudo-crud {
+  padding-top: 4rem;
+}
+
+.fundo--preto {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 120;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal--criacao {
+  padding: 2rem;
+  border-radius: 8px;
+  position: fixed;
+  width: 600px;
+  height: max-content;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 121;
+  background-color: #fff;
+  display: none;
+  transition: transform 0.3s ease;
+}
+.modal--criacao .form--criacao {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.modal--criacao .form--criacao h3 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.modal--criacao .form--criacao input {
+  padding: 0.5rem 1rem;
+  height: 3.5rem;
+  outline: none;
+  border: 1px solid #333333;
+  border-radius: 4px;
+}
+.modal--criacao .form--criacao input + input {
+  margin-top: 1rem;
+}
+.modal--criacao .form--criacao button {
+  margin-top: 2rem;
+  height: 3.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.modalCriacao .fundo--preto {
+  opacity: 1;
+  pointer-events: all;
+}
+body.modalCriacao .modal--criacao {
+  display: flex;
+  animation: sobe 0.3s ease forwards;
+}
+
+@keyframes sobe {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}/*# sourceMappingURL=style.css.map */
