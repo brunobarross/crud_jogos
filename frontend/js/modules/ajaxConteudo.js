@@ -5,77 +5,120 @@ export default function ajaxConteudo() {
 
   const ArrayJogos = [];
 
-  const getGames = async (data) =>{
-    try{
+  const getGames = async (data) => {
+    try {
       const response = await fetch('http://localhost:2000/api/')
       data = await response.json();
       return data;
     }
-    catch(err){
+    catch (err) {
       console.log(err)
     }
-    
+
   }
 
 
   const deletarGame = async (e) => {
-    try{
+    try {
       const id = e.target.id;
       console.log(id);
-      const response = await fetch(`http://localhost:2000/api/${id}`,{
+      const response = await fetch(`http://localhost:2000/api/${id}`, {
         method: 'DELETE'
       })
-      // window.location.reload();
+      window.location.reload();
     }
 
-    catch(err){
+    catch (err) {
       console.log(err)
     }
 
   }
 
 
-  const initialContent = async () =>{
-    const data = await getGames(); 
-    const mapData = data.map(
-      ({ _id, name, trofeus, dificuldade, data_finalizou }) => {
-        return `
-        <tr>
-          <th scope="row">${name}</th>
-          <td>${trofeus}</td>
-          <td>${dificuldade}</td>
-          <td>${data_finalizou}</td>
-          <td><button type="button" class="deletar" id="${_id}">DELETAR</td>
-        </tr>
-        `;
+  const criarJogo = async (nome, trofeus, dificuldade, dataFormatada) => {
+    const opcoes = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    ).join('');
-  
-    jogosContainer.innerHTML = mapData;
-  
-  }
-   initialContent()
+      body: JSON.stringify({
+        name: nome,
+        trofeus: trofeus,
+        dificuldade: dificuldade,
+        data_finalizou: dataFormatada
+      })
+    };
 
+    try {
+      const response = await fetch('http://localhost:2000/api/', opcoes);
+      const dados = await response.json()
+      window.location.reload()
+    }
+    catch (err) {
+      console.log(err)
+    }
 
-
-   
-  const generateContent = () => {
-    const mapData = ArrayJogos.map(
-      ({ id, nome_jogo, qtd_trofeus, dificuldade, data_finalizado }) => {
-        return `
-        <tr>
-          <th scope="row">${id}</th>
-          <td>${nome_jogo}</td>
-          <td>${qtd_trofeus}</td>
-          <td>${dificuldade}</td>
-          <td>${data_finalizado}</td>
-        </tr>
-        `;
-      },
-    ).join('');
-
-    jogosContainer.innerHTML = mapData;
   };
+
+
+
+  const generateContent = (dados) => {
+    console.log(dados)
+    // const mapData = dados.map(
+    //   ({ id, nome_jogo, qtd_trofeus, dificuldade, data_finalizado }) => {
+    //     return `
+    //     <tr>
+    //       <th scope="row">${id}</th>
+    //       <td>${nome_jogo}</td>
+    //       <td>${qtd_trofeus}</td>
+    //       <td>${dificuldade}</td>
+    //       <td>${data_finalizado}</td>
+    //     </tr>
+    //     `;
+    //   },
+    // ).join('');
+
+    // jogosContainer.innerHTML = mapData;
+  }
+
+  const initialContent = async () => {
+    const data = await getGames();
+    const tabela = document.querySelector("#example")
+    try {
+      const mapData = data.map(
+        ({ _id, name, trofeus, dificuldade, data_finalizou }) => {
+          return `
+          <tr>
+            <th scope="row">${name}</th>
+            <td>${trofeus}</td>
+            <td>${dificuldade}</td>
+            <td>${data_finalizou}</td>
+            <td><button type="button" class="deletar" id="${_id}">DELETAR</td>
+          </tr>
+          `;
+        },
+      ).join('');
+
+      jogosContainer.innerHTML = mapData;
+    }
+    catch (err) {
+      console.log(err)
+    }
+    $('#example').DataTable({
+      "language": {
+        "emptyTable": "Não há jogos cadastrados =(",
+        "search": "Procurar",
+        "lengthMenu": "Mostrar _MENU_ jogos",
+        "info": "Mostrando _START_ to _END_ of _TOTAL_ jogos",
+        "infoEmpty": "Mostrando 0 de 0 jogos"
+      }
+    });
+  }
+  initialContent()
+
+
+
+
 
   const generateID = () => Math.floor(Math.random() * 100);
 
@@ -98,17 +141,13 @@ export default function ajaxConteudo() {
     let dataFinalizou = form.querySelector('#dataFinalizou').value;
     let data = new Date(dataFinalizou);
     const dataFormatada = new Intl.DateTimeFormat('pt-BR').format(data);
-    pushJogos(nome, trofeus, dificuldade, dataFormatada);
-    setTimeout(() => {
-      console.log('oi');
-    }, 1000);
-    generateContent();
+    criarJogo(nome, trofeus, dificuldade, dataFormatada)
     form.reset();
     form.querySelector('input').focus();
   };
 
-  document.addEventListener('click', (e) =>{
-    if(e.target.classList.contains('deletar')){
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('deletar')) {
       deletarGame(e);
     }
   });

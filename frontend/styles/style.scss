@@ -1,64 +1,119 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-body,h1,h2,h3,p,a,ul,li{
+body,
+h1,
+h2,
+h3,
+p,
+a,
+ul,
+li {
   margin: 0;
   padding: 0;
 }
 
-*{
+* {
   box-sizing: border-box;
 }
-ul, li{
+
+ul,
+li {
   list-style: none;
 }
 
-a{
+a {
   text-decoration: none;
   color: inherit;
 }
 
-body{
+body {
   font-family: 'Poppins', sans-serif;
   font-size: 1rem;
 }
-.nav--crud{
+
+.nav--crud {
   background-color: #333333;
   padding: 2rem;
-  .logo{
+
+  .logo {
     color: #fff;
     font-size: 1.125rem;
     font-weight: 600;
   }
 }
 
-.crud{
-  .header--crud{
+.crud {
+  .header--crud {
     padding-top: 2rem;
-    .btn--container{
+
+    .btn--container {
       display: flex;
       justify-content: flex-end;
 
     }
   }
-  .conteudo-crud{
+
+  .conteudo-crud {
     padding-top: 4rem;
+
+    #example {
+      padding-top: 4rem;
+      margin-bottom: 4rem;
+
+      thead {
+        th {
+          text-align: center;
+
+        }
+      }
+
+      tbody {
+        th {
+          font-weight: 400;
+          padding: 1.125rem 0;
+          background-color: #fff;
+          text-align: center;
+        }
+
+        .odd,
+        .even {
+          td {
+            text-align: center;
+          }
+        }
+
+      }
+
+
+
+      .deletar {
+        background-color: red;
+        border: none;
+        outline: none;
+        padding: .5rem 1rem;
+        border-radius: 4px;
+        color: #fff;
+      }
+    }
   }
 }
 
-.fundo--preto{
+
+
+.fundo--preto {
   width: 100vw;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   opacity: 0;
-  background-color: rgba(0,0,0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 120;
   pointer-events: none;
   transition: opacity .3s ease;
 }
 
-.modal--criacao{
+.modal--criacao {
   padding: 2rem;
   border-radius: 8px;
   position: fixed;
@@ -76,27 +131,30 @@ body{
   display: none;
   transition: transform .3s ease;
 
-  .form--criacao{
+  .form--criacao {
     width: 100%;
     display: flex;
     flex-direction: column;
-    h3{
+
+    h3 {
       font-size: 2rem;
       text-align: center;
       margin-bottom: 2rem;
     }
-    input{
+
+    input {
       padding: .5rem 1rem;
       height: 3.5rem;
       outline: none;
       border: 1px solid #333333;
       border-radius: 4px;
-      & + input{
+
+      &+input {
         margin-top: 1rem;
       }
     }
 
-    button{
+    button {
       margin-top: 2rem;
       height: 3.5rem;
       display: inline-flex;
@@ -107,27 +165,28 @@ body{
 }
 
 
-body.modalCriacao{
-  .fundo--preto{
+body.modalCriacao {
+  .fundo--preto {
     opacity: 1;
     pointer-events: all;
   }
 
-  .modal--criacao{
+  .modal--criacao {
     display: flex;
     animation: sobe .3s ease forwards;
   }
 }
 
 
-@keyframes sobe{
-  from{
+@keyframes sobe {
+  from {
     opacity: 0;
-    transform: translate3d(0, 30px,0);
+    transform: translate3d(0, 30px, 0);
   }
-  to{
+
+  to {
     opacity: 1;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
 
   }
 }
