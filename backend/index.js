@@ -1,12 +1,16 @@
 const express = require('express');
 const res = require('express/lib/response');
 const app = express()
+const cors = require('cors');
 const port = 2000
 app.use(express.json())
 const url = 'mongodb+srv://brunobarros:senhadobruno@cluster0.yohai.mongodb.net/jogosLista?retryWrites=true&w=majority'
 const mongoose = require('mongoose');
 const { config } = require('nodemon');
 const match = require('nodemon/lib/monitor/match');
+
+
+app.use(cors())
 
 
 //o que pode entrar no banco de dados
@@ -19,14 +23,8 @@ const jogoSchema = new mongoose.Schema({
 });
 
 const jogoModel = mongoose.model('jogo', jogoSchema);
-
-// const novoJogo = new jogoModel({ name: 'Silence' });
-
-// novoJogo.save();
-
-
-
 const db = mongoose.connection;
+
 db.on('error', function callback() {
   console.log('erro ao conectar')
 });
@@ -87,8 +85,6 @@ app.put('/api/:id', (req, res) => {
     .then(() => res.json({ success: true }))
     .catch((err) => res.json({ success: false }))
 
-
-
 })
 
 
@@ -96,8 +92,8 @@ app.put('/api/:id', (req, res) => {
 // para deletar
 
 app.delete('/api/:id', (req, res) => {
-  const id = +req.params.id;
-  jogoModel.deleteOne({ id: id })
+  const id = req.params.id;
+  jogoModel.deleteOne({ _id: id })
     .then(() => res.json({ success: true }))
     .catch((err) => res.json({ success: false }))
 })
@@ -106,9 +102,6 @@ app.delete('/api/:id', (req, res) => {
 config.MONGOOSE = mongoose.connect(url)
 
 //servidor escuta a porta 2000
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(port, function () {
+  console.log('CORS-enabled web server listening on port 80')
 })
-
-
